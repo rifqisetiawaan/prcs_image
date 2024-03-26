@@ -10,9 +10,6 @@ from scipy import stats
 
 class process_image:
 
-    def __init__(self, centroid):
-        self.centroid = centroid
-
     def find_centroid(x1, y1, x2, y2):
         centx = int((x1+x2)/2)
         centy = int((y1+y2)/2)
@@ -41,8 +38,8 @@ class process_image:
     def penentuan_derajat(x_bola, y_bola):
         # menentukan perhitungan
         x_frame = 640; y_frame = 480
-        pos_x = x_bola-(x_frame/2)
-        pos_y = (y_frame/2)-y_bola
+        pos_x = x_bola-(300)
+        pos_y = (240)-y_bola
 
         if pos_x<0 and pos_y==0: # done
             radii = '-------'
@@ -91,25 +88,49 @@ class process_image:
     
     def dist_real(dpx):
         if dpx is not None:
-            dist_real = (-100.2*(np.log(dpx)) - 28.43)
+            dist_real = (1.516*dpx-100.167)-16
             dist_real = np.round(dist_real, decimals=2)
             return dist_real
         else:
             pass
 
-    def text_display_det(classes, frame, ang, dist_real):
+    def text_display_det(frame, ang, dist_real, vel, kin,fps):
         font = cv2.FONT_HERSHEY_SIMPLEX
-        if classes == [0.0]:
-            cv2.putText(frame,'Angle Bola: '+str(ang)+' deg', 
-                        (50, 50), font, 0.5,
-                        (0, 255, 255), 1, cv2.LINE_4)
-            cv2.putText(frame,'Distance Bola: '+str(dist_real)+' cm', 
-                        (50, 65), font, 0.5,
-                        (0, 255, 255), 1, cv2.LINE_4)
-        else:
-            cv2.putText(frame,'Angle Bola: N/A', 
-                        (50, 50), font, 0.5,
-                        (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'KIROSENA INTERFACE', 
+                    (50, 50), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Angle Bola: '+str(ang)+' deg', 
+                    (50, 65), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Distance Bola: '+str(dist_real)+' cm', 
+                    (50, 80), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Status: '+str(vel), 
+                    (50, 95), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Motor Power: '+str(kin), 
+                    (50, 110), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'FPS: '+str(fps), 
+                    (50, 125), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+
                     
-            
+    def text_display_na(frame):
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(frame,'KIROSENA INTERFACE', 
+                    (50, 50), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Angle Bola: N/A', 
+                    (50, 65), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Distance Bola: N/A', 
+                    (50, 80), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Status: N/A', 
+                    (50, 95), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
+        cv2.putText(frame,'Motor Power: N/A', 
+                    (50, 110), font, 0.5,
+                    (0, 255, 255), 1, cv2.LINE_4)
     
